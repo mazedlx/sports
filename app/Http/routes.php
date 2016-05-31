@@ -1,6 +1,7 @@
 <?php
 
 Route::get('/', 'PoolController@index');
+Route::get('/sports', 'PoolController@index');
 Route::get('/pool/{year}/{locaton_id}', 'PoolController@show');
 Route::get('/sports/pool/{year}/{locaton_id}', 'PoolController@show');
 
