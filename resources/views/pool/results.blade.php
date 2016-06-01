@@ -44,7 +44,7 @@
 <div class="row">
     <div class="col-md-4">
         <h4>Relatives Ranking</h4>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
                 <th>Pos</th>
                 <th>Name</th>
@@ -63,7 +63,7 @@
     </div>
     <div class="col-md-4">
         <h4>Absolutes Ranking</h4>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
                 <th>Pos</th>
                 <th>Name</th>
@@ -82,7 +82,7 @@
     </div>
     <div class="col-md-4">
         <h4>Ranking Max. Plus</h4>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
                 <th>Pos</th>
                 <th>Name</th>
@@ -103,7 +103,7 @@
 <div class="row">
     <div class="col-md-4">
         <h4>Ranking Max. Minus</h4>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
                 <th>Pos</th>
                 <th>Name</th>
@@ -122,7 +122,7 @@
     </div>
     <div class="col-md-4">
         <h4>Ranking Avg. Plus</h4>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
                 <th>Pos</th>
                 <th>Name</th>
@@ -141,7 +141,7 @@
     </div>
     <div class="col-md-4">
         <h4>Ranking Avg. Minus</h4>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
                 <th>Pos</th>
                 <th>Name</th>
@@ -163,7 +163,7 @@
 @if($location->id == 2)
     <div class="col-md-4">
         <h4>Wer hat wie oft bezahlt</h4>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -182,7 +182,7 @@
     </div>
     <div class="col-md-4">
         <h4>Letzte Zahler</h4>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -202,7 +202,7 @@
 @endif
     <div class="col-md-4">
         <h4>Wer hat wie oft gefehlt</h4>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
                 <th>Name</th>
                 <th>hat wie oft gefehlt</th>
@@ -220,7 +220,7 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th>Team</th>
@@ -242,7 +242,7 @@
         </table>
     </div>
     <div class="col-md-6">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
             @if($location->id == 2)
                 <tr>
