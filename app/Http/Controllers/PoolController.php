@@ -11,6 +11,7 @@ use App\Result;
 use App\Game;
 use App\GameTeam;
 use App\Team;
+
 class PoolController extends Controller
 {
     public function getRanking($array, $updown)

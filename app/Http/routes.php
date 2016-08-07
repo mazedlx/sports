@@ -12,3 +12,5 @@ Route::get('/create/games/{day_id}/{location_id}', 'PoolController@createGames')
 Route::post('/store/day', 'PoolController@storeDay');
 Route::post('/store/results', 'PoolController@storeResults');
 Route::post('/store/games', 'PoolController@storeGames');
+
+Route::get('/game/{id}', 'GameController@show');

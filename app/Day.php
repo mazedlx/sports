@@ -33,6 +33,11 @@ class Day extends Model
         return $this->hasMany('App\Result', 'id_day');
     }
 
+    public function games()
+    {
+        return $this->hasMany('App\Game', 'id_day');
+    }
+
     public function scopeYear($query, $year)
     {
         return $query->whereBetween('pool_day.date', [$year . '-01-01', $year . '-12-31']);

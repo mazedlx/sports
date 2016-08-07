@@ -19,7 +19,7 @@
         <tbody>
             @foreach($results as $result)
             <tr>
-                <td>{{ $result->day()->first()->date->format('d.m.Y') }}</td>
+                <td><a href="/game/{{ $result->day()->first()->id }}">{{ $result->day()->first()->date->format('d.m.Y') }}</a></td>
 
                 @foreach($players as $player)
                 <td>{{ $result->ofPlayer($player->id)->ofDay($result->day()->first()->id)->get()->first()->plus }}</td>

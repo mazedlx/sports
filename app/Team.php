@@ -8,6 +8,11 @@ class Team extends Model
 {
     protected $table = 'pool_team';
 
+    public function games()
+    {
+        return $this->hasMany('App\Game');
+    }
+
     public function scopeHasLocation($query, $location_id)
     {
         return $query
