@@ -1,13 +1,9 @@
-@extends('layouts.layout')
-
-@section('content')
-<div class="row">
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Frame #</th>
-            <th>Winner</th>
-            <th>Loser</th>
+            <th>Gewinner</th>
+            <th>Verlierer</th>
         </tr>
     </thead>
     <tbody>
@@ -20,5 +16,3 @@
     @endforeach        
     </tbody>
 </table>
-</div>
-@stop

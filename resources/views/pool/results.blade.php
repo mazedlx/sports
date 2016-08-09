@@ -19,7 +19,11 @@
         <tbody>
             @foreach($results as $result)
             <tr>
-                <td><a href="/game/{{ $result->day()->first()->id }}">{{ $result->day()->first()->date->format('d.m.Y') }}</a></td>
+                <td>
+                    <a data-toggle="modal" data-target="#modal-games" data-url="/game/{{ $result->day()->first()->id }}">
+                        {{ $result->day()->first()->date->format('d.m.Y') }}
+                    </a>
+                </td>
 
                 @foreach($players as $player)
                 <td>{{ $result->ofPlayer($player->id)->ofDay($result->day()->first()->id)->get()->first()->plus }}</td>
@@ -382,11 +386,37 @@
         </table>
     </div>
 </div>
+
+<div class="modal fade" id="modal-games">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Games</h4>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Schlie&szlig;en</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 $('td, th').css('text-align', 'center');
 $('[data-top="1"]').closest('td').addClass('bg-success');
 $('[data-top="2"]').closest('td').addClass('bg-info');
 $('[data-top="last"]').closest('td').addClass('bg-danger');
 $('[data-top="penultimate"]').closest('td').addClass('bg-warning');
+$('[data-toggle="modal"]').click(function() {
+    var that = $(this);
+    $.ajax({
+        url: that.attr('data-url')
+    }).done(function(content) {
+        $('.modal-body').html(content);
+        $('.modal-title').html('Games ' + that.html());
+    });
+}).css('cursor','pointer');
 </script>
 @endsection
