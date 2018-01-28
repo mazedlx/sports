@@ -42,7 +42,12 @@ class Player extends Model
     public function scopeAverage($query, $location_id, $year)
     {
         return \DB::table('pool_results')
-            ->select(\DB::raw('ROUND(SUM(pool_results.plus)/SUM(pool_results.minus),3) AS score_avg, CONCAT(pool_player.firstname," ",pool_player.name) AS playername'))
+            ->select(\DB::raw('
+                ROUND(
+                    SUM(pool_results.plus) / IF(SUM(pool_results.minus) = 0, 1, SUM(pool_results.minus)),3
+                ) AS score_avg,
+                CONCAT(pool_player.firstname," ",pool_player.name) AS playername')
+            )
             ->join('pool_player', 'pool_player.id', '=', 'pool_results.id_player')
             ->join('pool_day', 'pool_day.id', '=', 'pool_results.id_day')
             ->where('pool_results.id_location', '=', $location_id)

@@ -16,7 +16,7 @@ class PoolController extends Controller
 {
     public function getRanking($array, $updown)
     {
-        $oldvalue = null;
+        $oldvalue = 1;
         $updown == "up" ? asort($array) : arsort($array);
         $tabledata = [];
         $i = 1;
