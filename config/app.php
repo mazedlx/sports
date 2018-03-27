@@ -41,6 +41,9 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'name' => env('APP_NAME', 'Laravel'),
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
