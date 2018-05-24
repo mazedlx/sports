@@ -12,11 +12,11 @@ class Game extends Model
 
     public function winner()
     {
-        return $this->hasMany('App\GameTeam','id_game')->where('result', '=', 1);
+        return $this->hasMany('App\GameTeam', 'id_game')->where('result', '=', 1);
     }
 
     public function loser()
     {
-        return $this->hasMany('App\GameTeam','id_game')->where('result', '=', 0);
+        return $this->hasMany('App\GameTeam', 'id_game')->where('result', '=', 0);
     }
 }
