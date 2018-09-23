@@ -160,9 +160,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,
-	Spatie\Backup\BackupServiceProvider::class,
-
-
+        Spatie\Backup\BackupServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
     ],
 
     /*
@@ -211,6 +210,7 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-    ],
 
+        'Notification' => Illuminate\Support\Facades\Notification::class,
+    ],
 ];
