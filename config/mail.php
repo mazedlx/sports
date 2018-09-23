@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+'from' => ['address' => 'mazedlx@gmail.com', 'name' => 'mazedlx.net webserver'],
 
     /*
     |--------------------------------------------------------------------------
