@@ -160,6 +160,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,
+	Spatie\Backup\BackupServiceProvider::class,
+
 
     ],
 
