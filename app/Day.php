@@ -6,19 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Day extends Model
 {
-    protected $fillable = ['date', 'frames', 'id_payer'];
-    /**
-     * The day's table name
-     *
-     * @var string
-     */
+    protected $fillable = [
+        'date',
+        'frames',
+        'id_payer'
+    ];
+
     protected $table = 'pool_day';
 
-    /**
-     * Casts
-     *
-     * @var array
-     */
     protected $casts = [
         'date' => 'date'
     ];
@@ -48,10 +43,10 @@ class Day extends Model
         return $query->sum('frames');
     }
 
-    public function scopeHasLocation($query, $location_id)
+    public function scopeHasLocation($query, Location $location)
     {
         return $query
             ->join('pool_results', 'pool_results.id_day', '=', 'pool_day.id')
-            ->where('pool_results.id_location', '=', $location_id);
+            ->where('pool_results.id_location', '=', $location->id);
     }
 }
