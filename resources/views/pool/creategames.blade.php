@@ -1,32 +1,31 @@
 @extends('layouts.layout')
 
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <h1>Pool Ergebnisse</h1>
-        {!! Form::open(['action' => 'PoolController@storeGames', 'class' => 'form-horizontal']) !!}
-        @for($i = 0; $i < $frames; $i++)
-
-        <div class="form-group">
-            {!! Form::label('game_' . $i, 'Game #' . $i, ['class' => 'control-label col-md-2']) !!}
-            <div class="col-md-3">
-            {!! Form::select('winner['.$i.']', $teams_id, null, ['class' => 'form-control']) !!}
-            </div>
-            <div class="col-md-3">
-            {!! Form::select('loser['.$i.']', $teams_id, null, ['class' => 'form-control']) !!}
-            </div>
+<div class="w-1/2">
+    <h1>Pool Ergebnisse</h1>
+    {!! Form::open(['action' => 'PoolController@storeGames']) !!}
+    @foreach(range(0, $frames-1) as $frame)
+        <div class="flex items-center justify-between py-1">
+            <label for="">Game #{{ $frame }}</label>
+            <select name="winner[]">
+            @foreach ($teams as $id => $team)
+                <option value="{{ $id }}">{{ $team }}</option>
+            @endforeach
+            </select>
+            <select name="loser[]">
+            @foreach ($teams as $id => $team)
+                <option value="{{ $id }}">{{ $team }}</option>
+            @endforeach
+            </select>
+            <input type="hidden" name="frame[]" value="{{ $frame }}">
         </div>
-        @endfor
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-6">
-                <button type="submit" class="btn btn-lg btn-primary">Weiter</button>
-            </div>
+    @endforeach
+        <div class="flex justify-end items-center py-4">
+            <button type="submit" class="border px-4 py-2">Weiter</button>
         </div>
-        {!! Form::hidden('day_id', $day_id) !!}
-        {!! Form::hidden('location_id', $location_id) !!}
-        {!! Form::hidden('frames', $frames) !!}
-        {!! Form::close() !!}
-    </div>
+        <input type="hidden" name="day_id" value="{{ $day->id }}">
+        <input type="hidden" name="location_id" value="{{ $location->id }}">
+        <input type="hidden" name="frames" value="{{ $frames }}">
+    {!! Form::close() !!}
 </div>
-
 @endsection
