@@ -2,38 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Day;
-use App\Location;
+use App\Game;
+use App\Team;
 use App\Player;
 use App\Result;
-use App\Game;
+use App\Location;
 use App\GameTeam;
-use App\Team;
+use Illuminate\Http\Request;
 
 class PoolController extends Controller
 {
-    public function getRanking($array, $updown)
+    const LOCATION_1 = 2;
+    const LOCATION_2 = 8;
+
+    public function getRanking($data, $updown)
     {
         $oldvalue = 1;
-        $updown == "up" ? asort($array) : arsort($array);
+        $updown == "up" ? asort($data) : arsort($data);
         $tabledata = [];
         $i = 1;
         $n = 0;
-        foreach ($array as $playername => $value) {
+        foreach ($data as $name => $value) {
+            $show = $i;
+            $n = 0;
             if ($oldvalue == $value) { // ex aequo
                 $show = $i - 1 - $n;
                 $n++;
-            } else {
-                $show = $i;
-                $n = 0;
             }
             $oldvalue = $value;
 
             $tabledata[] = [
                 $show,
-                $playername,
+                $name,
                 number_format($value, 3, ',', '.')
             ];
             $i++;
@@ -41,49 +42,56 @@ class PoolController extends Controller
         return $tabledata;
     }
 
-    public function index()
+    public function show($year, Location $location)
     {
-        return view('pool.index');
-    }
+        $scoresAvg = $this->getRanking(
+            Player::average($location, $year)->mapWithKeys(function ($player) {
+                return [$player->name => $player->score_avg];
+            })->toArray(),
+            'down'
+        );
 
-    public function show($year, $location_id)
-    {
-        foreach (Player::Average($location_id, $year) as $score) {
-            $average_scores[$score->playername] = $score->score_avg;
-        }
-        $scores_avg = $this->getRanking($average_scores, 'down');
+        $scoresTotal = $this->getRanking(
+            Player::total($location, $year)->mapWithKeys(function ($player) {
+                return [$player->name => $player->score_total];
+            })->toArray(),
+            'down'
+        );
 
-        foreach (Player::Total($location_id, $year) as $score) {
-            $total_scores[$score->playername] = $score->score_total;
-        }
-        $scores_total = $this->getRanking($total_scores, 'down');
+        $maxPluses = $this->getRanking(
+            Player::maxPlus($location, $year)->mapWithKeys(function ($player) {
+                return [$player->name => $player->max_plus];
+            })->toArray(),
+            'down'
+        );
 
-        foreach (Player::maxPlus($location_id, $year) as $score) {
-            $max_pluses[$score->playername] = $score->max_plus;
-        }
-        $max_pluses = $this->getRanking($max_pluses, 'down');
+        $maxMinuses = $this->getRanking(
+            Player::maxMinus($location, $year)->mapWithKeys(function ($player) {
+                return [$player->name => $player->max_minus];
+            })->toArray(),
+            'up'
+        );
 
-        foreach (Player::maxMinus($location_id, $year) as $score) {
-            $max_minuses[$score->playername] = $score->max_minus;
-        }
-        $max_minuses = $this->getRanking($max_minuses, 'up');
+        $avgPluses = $this->getRanking(
+            Player::avgPlus($location, $year)->mapWithKeys(function ($player) {
+                return [$player->name => $player->avg_plus];
+            })->toArray(),
+            'down'
+        );
 
-        foreach (Player::avgPlus($location_id, $year) as $score) {
-            $avg_pluses[$score->playername] = $score->avg_plus;
-        }
-        $avg_pluses = $this->getRanking($avg_pluses, 'down');
+        $avgMinuses = $this->getRanking(
+            Player::avgMinus($location, $year)->mapWithKeys(function ($player) {
+                return [$player->name => $player->avg_minus];
+            })->toArray(),
+            'up'
+        );
 
-        foreach (Player::avgMinus($location_id, $year) as $score) {
-            $avg_minuses[$score->playername] = $score->avg_minus;
-        }
-        $avg_minuses = $this->getRanking($avg_minuses, 'up');
+        $payers = Player::payer($location, $year);
+        $last_payers = Player::lastPayer($location, $year);
+        $absentees = Player::absent($location, $year);
+        $performances = Player::performance($location, $year, false);
 
-        $payers = Player::payer($location_id, $year);
-        $last_payers = Player::lastPayer($location_id, $year);
-        $absentees = Player::absent($location_id, $year);
-        $performances = Player::performance($location_id, $year, false);
-
-        $scores = Player::performance($location_id, $year, true);
+        $scores = Player::performance($location, $year, true);
         $i = 1;
         $j = count($scores);
         foreach ($scores as $team => $score) {
@@ -101,99 +109,105 @@ class PoolController extends Controller
             }
             $i++;
         }
-
-        return view('pool.results')
-            ->with('location', Location::findOrFail($location_id))
-            ->with('year', $year)
-            ->with('players', Location::findOrFail($location_id)->players()->sortByName()->get())
-            ->with('results', Result::hasLocation($location_id)->year($year)->sortByDate()->get())
-            ->with('totalFrames', Day::hasLocation($location_id)->year($year)->totalFrames() / Location::findOrFail($location_id)->players()->sortByName()->get()->count())
-            ->with('scores_avg', $scores_avg)
-            ->with('scores_total', $scores_total)
-            ->with('max_pluses', $max_pluses)
-            ->with('max_minuses', $max_minuses)
-            ->with('avg_pluses', $avg_pluses)
-            ->with('avg_minuses', $avg_minuses)
-            ->with('payers', $payers)
-            ->with('last_payers', $last_payers)
-            ->with('absentees', $absentees)
-            ->with('performances', $performances)
-            ->with('scores', $scores);
+        return view('pool.results', [
+            'absentees' => $absentees,
+            'avg_minuses' => $avgMinuses,
+            'avg_pluses' => $avgPluses,
+            'last_payers' => $last_payers,
+            'location' => $location,
+            'max_minuses' => $maxMinuses,
+            'max_pluses' => $maxPluses,
+            'payers' => $payers,
+            'performances' => $performances,
+            'players' => $location->players()->sortByName()->get(),
+            'results' => Result::hasLocation($location)->year($year)->sortByDate()->get(),
+            'scores_avg' => $scoresAvg,
+            'scores_total' => $scoresTotal,
+            'scores' => $scores,
+            'totalFrames' => $location->totalFrames($year),
+            'year' => $year,
+        ]);
     }
 
     public function createDay()
     {
-        return view('pool.createday')
-            ->with('locations_id', Location::whereIn('id', [2, 8])->pluck('name', 'id'))
-            ->with('payers_id', collect(Player::fullnames())->pluck('playername', 'id')->prepend('Alle', 0));
+        return view('pool.createday', [
+            'locations' => Location::whereIn('id', [
+                    self::LOCATION_1,
+                    self::LOCATION_2
+                ])
+                ->pluck('name', 'id'),
+            'players' => collect(Player::fullnames())->pluck('playername', 'id')->prepend('Alle', 0)
+        ]);
     }
 
     public function storeDay(Request $request)
     {
-        $day = Day::create($request->all());
-
-        return redirect('/create/results/' . $day->id . '/' . $request->location_id);
+        $day = Day::create([
+            'date' => request('date'),
+            'frames' => request('frames'),
+            'id_payer' => request('id_payer'),
+        ]);
+        return redirect("/create/results/{$day->id}/{$request->location_id}");
     }
 
-    public function createResults($day_id, $location_id)
+    public function createResults(Day $day, Location $location)
     {
-        return view('pool.createresults')
-            ->with('day_id', $day_id)
-            ->with('location_id', $location_id)
-            ->with('players', Player::havingLocation($location_id)->get());
+        return view('pool.createresults', [
+            'day' => $day,
+            'location' => $location,
+            'players' => Player::havingLocation($location)->get(),
+        ]);
     }
 
     public function storeResults(Request $request)
     {
-        $plus = $request->plus;
-        $minus = $request->minus;
+        $results = collect($request->only('player', 'plus', 'minus'))
+            ->transpose()
+            ->map(function ($result) {
+                Result::create([
+                    'id_day' => request('day_id'),
+                    'id_location' => request('location_id'),
+                    'id_player' => $result[0],
+                    'plus' => $result[1],
+                    'minus' => $result[2],
+                ]);
+            });
 
-        foreach ($plus as $player_id => $p) {
-            Result::create([
-                'id_day' => $request->day_id,
-                'id_location' => $request->location_id,
-                'id_player' => $player_id,
-                'plus' => $plus[$player_id],
-                'minus' => $minus[$player_id]
-            ]);
-        }
-
-        return redirect('/create/games/' . $request->day_id . '/' . $request->location_id);
+        return redirect("/create/games/{$request->day_id}/$request->location_id");
     }
 
-    public function createGames($day_id, $location_id)
+    public function createGames(Day $day, Location $location)
     {
-        return view('pool.creategames')
-            ->with('day_id', $day_id)
-            ->with('location_id', $location_id)
-            ->with('frames', Day::findOrFail($day_id)->frames)
-            ->with('teams_id', Team::hasLocation($location_id)->pluck('team', 'id'));
+        return view('pool.creategames', [
+            'day' => $day,
+            'location' => $location,
+            'frames' => $day->frames,
+            'teams' => Team::hasLocation($location)->pluck('team', 'id'),
+        ]);
     }
 
     public function storeGames(Request $request)
     {
-        $winner = $request->winner;
-        $loser = $request->loser;
+        $games = collect($request->only('frame', 'winner', 'loser'))
+            ->transpose()
+            ->map(function ($result) {
+                $game = Game::create([
+                    'id_day' => request('day_id'),
+                    'game_no' => $result[0],
+                ]);
+                GameTeam::create([
+                    'id_game' => $game->id,
+                    'id_team' => $result[1],
+                    'result' => 1,
+                ]);
+                GameTeam::create([
+                    'id_game' => $game->id,
+                    'id_team' => $result[2],
+                    'result' => 0,
+                ]);
+            });
 
-        for ($i = 0; $i < $request->frames; $i++) {
-            $game = Game::create([
-                'id_day' => $request->day_id,
-                'game_no' => $i
-            ]);
-
-            $game_team = GameTeam::create([
-                'id_game' => $game->id,
-                'id_team' => $winner[$i],
-                'result' => 1
-            ]);
-
-            $game_team = GameTeam::create([
-                'id_game' => $game->id,
-                'id_team' => $loser[$i],
-                'result' => 0
-            ]);
-        }
-
-        return redirect('/pool/' . date('Y') . '/' . $request->location_id);
+        return redirect("/pool/" . date('Y'). "/{$request->location_id}");
     }
 }
