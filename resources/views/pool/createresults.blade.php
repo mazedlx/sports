@@ -1,29 +1,24 @@
 @extends('layouts.layout')
 
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <h1>Pool Ergebnisse</h1>
-        {!! Form::open(['action' => 'PoolController@storeResults', 'class' => 'form-horizontal']) !!}
-        @foreach($players as $player)
-            <div class="form-group">
-                {!! Form::label('plus_' . $player->id, $player->firstname . ' ' . $player->name, ['class' => 'control-label col-md-2']) !!}
-                <div class="col-md-3 has-success">
-                {!! Form::number('plus[' . $player->id . ']', 0, ['class' => 'form-control']) !!}
-                </div>
-                <div class="col-md-3 has-error">
-                {!! Form::number('minus[' . $player->id . ']', 0, ['class' => 'form-control']) !!}
-                </div>
-            </div>
-        @endforeach
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-6">
-                <button type="submit" class="btn btn-primary">Weiter</button>
-            </div>
+<h1>Pool Ergebnisse</h1>
+<form action="{{ route('results.store') }}" method="POST">
+    @csrf
+    <div class="w-1/2">
+    @foreach($players as $player)
+        <div class="flex items-center justify-between py-2">
+            <label for="" class="w-1/3">{{ $player->fullName }}</label>
+            <input class="w-1/3 border px-4 py-2" type="number" name="plus[]" value="0">
+            <input class="w-1/3 border px-4 py-2" type="number" name="minus[]" value="0">
+            <input type="hidden" name="player[]" value="{{ $player->id }}">
         </div>
-            {!! Form::hidden('day_id', $day_id) !!}
-            {!! Form::hidden('location_id', $location_id) !!}
-        {!! Form::close() !!}
+        @endforeach
+        <div class="flex justify-end py-2">
+            <button type="submit" class="border px-4 py-2">Weiter</button>
+        </div>
+
+        <input type="hidden" name="day_id" value="{{ $day->id }}">
+        <input type="hidden" name="location_id" value="{{ $location->id }}">
     </div>
-</div>
+</form>
 @endsection

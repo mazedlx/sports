@@ -1,39 +1,41 @@
 @extends('layouts.layout')
+
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <h1>Pool Ergebnisse</h1>
-        {!! Form::open(['action' => 'PoolController@storeDay', 'class' => 'form-horizontal']) !!}
-            <div class="form-group">
-                {!! Form::label('location', 'Gruppe', ['class' => 'control-label col-md-2']) !!}
-                <div class="col-md-6">
-                {!! Form::select('location_id', $locations_id, null, ['class' => 'form-control']) !!}
-                </div>
-            </div>
-            <div class="form-group">
-                {!! Form::label('date', 'Datum', ['class' => 'control-label col-md-2']) !!}
-                <div class="col-md-6">
-                {!! Form::date('date', date('Y-m-d'), ['class' => 'form-control']) !!}
-                </div>
-            </div>
-            <div class="form-group">
-                {!! Form::label('frames', 'Frames', ['class' => 'control-label col-md-2']) !!}
-                <div class="col-md-6">
-                {!! Form::number('frames', null, ['class' => 'form-control', 'required' => 'required', 'min' => 1]) !!}
-                </div>
-            </div>
-            <div class="form-group">
-                {!! Form::label('id_payer', 'Bezahlt hat', ['class' => 'control-label col-md-2']) !!}
-                <div class="col-md-6">
-                {!! Form::select('id_payer', $payers_id, null, ['class' => 'form-control']) !!}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-6">
-                    <button type="submit" class="btn btn-primary btn-lg">Weiter</button>
-                </div>
-            </div>
-        {!! Form::close() !!}
+<h1>Pool Ergebnisse</h1>
+<form action="{{ route('days.store') }}" method="POST">
+    @csrf
+    <div class="w-1/2">
+        <div class="flex items-center justify-between py-2">
+            <label for="" class="w-1/4">Gruppe</label>
+            <select name="location_id" class="w-3/4">
+            @foreach ($locations as $id => $location)
+                <option value="{{ $id }}">{{ $location }}</option>
+            @endforeach
+            </select>
+        </div>
+
+        <div class="flex items-center justify-between py-2">
+            <label for="" class="w-1/4">Datum</label>
+            <input class="w-3/4 border px-4 py-2" type="date" name="date" value="{{ date('Y-m-d') }}">
+        </div>
+
+        <div class="flex items-center justify-between py-2">
+            <label for="" class="w-1/4">Frames</label>
+            <input class="w-3/4 border px-4 py-2" type="number" name="frames" min="1">
+        </div>
+
+        <div class="flex items-center justify-between py-2">
+            <label for="" class="w-1/4">Bezahlt hat</label>
+            <select class="w-3/4" name="id_payer">
+            @foreach ($players as $id => $player)
+                <option value="{{ $id }}">{{ $player }}</option>
+            @endforeach
+            </select>
+        </div>
+
+        <div class="flex items-center justify-end py-2">
+            <button type="submit" class="border px-4 py-2 hover:bg-grey-darker hover:text-white">Weiter</button>
+        </div>
     </div>
-</div>
+</form>
 @endsection

@@ -1,19 +1,21 @@
 @extends('layouts.layout')
 
 @section('content')
-<div class="row">
-    <div class="col-md-12">
-        <h1>Pool</h1>
-        <ul class="list-group">
-        @for($i = date('Y'); $i >= 2006; $i--)
-            @if($i >= 2015)
-                <a class="list-group-item" href="pool/{{ $i }}/2">{{ $i }} WN I</a>
-                <a class="list-group-item" href="pool/{{ $i }}/8">{{ $i }} WN II</a>
-            @else
-                <a class="list-group-item" href="pool/{{ $i }}/2">{{ $i }}</a>
-            @endif
-        @endfor
-        </ul>
-    </div>
-</div>
+<h1>Pool</h1>
+<ul class="list-reset">
+@foreach(range(date('Y'), 2006) as $year)
+    @if($year >= 2015)
+        <li class="px-4 py-1">
+            <a class="text-grey-darkest hover:no-underline" href="pool/{{ $year }}/{{ $locationIdOne }}">{{ $year }} WN I</a>
+        </li>
+        <li class="px-4 py-1">
+            <a class="text-grey-darkest hover:no-underline" href="pool/{{ $year }}/{{ $locationIdTwo }}">{{ $year }} WN II</a>
+        </li>
+    @else
+        <li class="px-4 py-1">
+            <a class="text-grey-darkest hover:no-underline" href="pool/{{ $year }}/{{ $locationIdOne }}}">{{ $year }}</a>
+        </li>
+    @endif
+@endforeach
+</ul>
 @endsection
