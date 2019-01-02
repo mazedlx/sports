@@ -17,8 +17,9 @@ class GamesController extends Controller
     {
         $games = $day->games()->get();
 
-        return view('pool.games')
-            ->with('games', $games);
+        return view('pool.games', [
+            'games' => $games,
+        ]);
     }
 
     public function create(Day $day, Location $location)

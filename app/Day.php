@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Day extends Model
@@ -20,22 +21,26 @@ class Day extends Model
 
     public function player()
     {
-        return $this->belongsTo('App\Player', 'id_payer');
+        return $this->belongsTo(Player::class, 'id_payer');
     }
 
     public function results()
     {
-        return $this->hasMany('App\Result', 'id_day');
+        return $this->hasMany(Result::class, 'id_day');
     }
 
     public function games()
     {
-        return $this->hasMany('App\Game', 'id_day');
+        return $this->hasMany(Game::class, 'id_day');
     }
 
     public function scopeYear($query, $year)
     {
-        return $query->whereBetween('pool_day.date', [$year . '-01-01', $year . '-12-31']);
+        $dt = Carbon::create($year, 1, 1);
+        return $query->whereBetween('pool_day.date', [
+            $dt->startOfYear()->format('Y-m-d'),
+            $dt->endOfYear()->format('Y-m-d'),
+        ]);
     }
 
     public function scopeTotalFrames($query)
