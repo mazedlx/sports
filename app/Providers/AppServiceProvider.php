@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Collection;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Collection::macro('transpose', function () {
+            $items = array_map(function (...$items) {
+                return $items;
+            }, ...$this->values());
+            return new static($items);
+        });
     }
 
     /**
