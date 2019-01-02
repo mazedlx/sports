@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>{{ $location->name }} {{ $year }}</h1>
-<div class="px-4">
+<div class="px-4" id="app">
     <h2 class="py-4">Results</h2>
     <table class="table table-auto border">
         <thead>
@@ -18,9 +18,10 @@
         @foreach($results as $result)
             <tr>
                 <td class="cell">
-                    <a data-toggle="modal" data-target="#modal-games" data-url="/game/{{ $result->day()->first()->id }}">
-                        {{ $result->day()->first()->date->format('d.m.Y') }}
-                    </a>
+                    <game-link
+                        :day-id="{{ $result->day()->first()->id }}"
+                        date="{{ $result->day()->first()->date->format('d.m.Y') }}"
+                    ></game-link>
                 </td>
             @foreach($players as $player)
                 <td class="cell">{{ $result->ofPlayer($player)->ofDay($result->day()->first())->get()->first()->plus }}</td>
@@ -390,38 +391,4 @@
         </table>
     </div>
 </div>
-
-
-{{-- <div class="modal fade" id="modal-games">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h2 class="modal-title">Games</h2>
-
-        <div class="modal-body">
-
-
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Schlie&szlig;en</button> --}}
-
-
-
-
-{{-- <script>
-$('td, th').css('text-align', 'center');
-$('[data-top="1"]').closest('td').addClass('bg-success');
-$('[data-top="2"]').closest('td').addClass('bg-info');
-$('[data-top="last"]').closest('td').addClass('bg-danger');
-$('[data-top="penultimate"]').closest('td').addClass('bg-warning');
-$('[data-toggle="modal"]').click(function() {
-var that = $(this);
-$.ajax({
-    url: that.attr('data-url')
-}).done(function(content) {
-    $('.modal-body').html(content);
-    $('.modal-title').html('Games ' + that.html());
-});
-}).css('cursor','pointer');
-</script> --}}
 @endsection
