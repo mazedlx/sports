@@ -16,70 +16,44 @@ class PoolController extends Controller
     const LOCATION_1 = 2;
     const LOCATION_2 = 8;
 
-    public function getRanking($data, $updown)
-    {
-        $oldvalue = 1;
-        $updown == "up" ? asort($data) : arsort($data);
-        $tabledata = [];
-        $i = 1;
-        $n = 0;
-        foreach ($data as $name => $value) {
-            $show = $i;
-            $n = 0;
-            if ($oldvalue == $value) { // ex aequo
-                $show = $i - 1 - $n;
-                $n++;
-            }
-            $oldvalue = $value;
-
-            $tabledata[] = [
-                $show,
-                $name,
-                number_format($value, 3, ',', '.')
-            ];
-            $i++;
-        }
-        return $tabledata;
-    }
-
     public function show($year, Location $location)
     {
-        $scoresAvg = $this->getRanking(
+        $scoresAvg = getRanking(
             Player::average($location, $year)->mapWithKeys(function ($player) {
                 return [$player->name => $player->score_avg];
             })->toArray(),
             'down'
         );
 
-        $scoresTotal = $this->getRanking(
+        $scoresTotal = getRanking(
             Player::total($location, $year)->mapWithKeys(function ($player) {
                 return [$player->name => $player->score_total];
             })->toArray(),
             'down'
         );
 
-        $maxPluses = $this->getRanking(
+        $maxPluses = getRanking(
             Player::maxPlus($location, $year)->mapWithKeys(function ($player) {
                 return [$player->name => $player->max_plus];
             })->toArray(),
             'down'
         );
 
-        $maxMinuses = $this->getRanking(
+        $maxMinuses = getRanking(
             Player::maxMinus($location, $year)->mapWithKeys(function ($player) {
                 return [$player->name => $player->max_minus];
             })->toArray(),
             'up'
         );
 
-        $avgPluses = $this->getRanking(
+        $avgPluses = getRanking(
             Player::avgPlus($location, $year)->mapWithKeys(function ($player) {
                 return [$player->name => $player->avg_plus];
             })->toArray(),
             'down'
         );
 
-        $avgMinuses = $this->getRanking(
+        $avgMinuses = getRanking(
             Player::avgMinus($location, $year)->mapWithKeys(function ($player) {
                 return [$player->name => $player->avg_minus];
             })->toArray(),
