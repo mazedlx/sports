@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>sports.mazedlx.net</title>
         <link rel="stylesheet" href="/css/app.css">
-        <script src="/js/app.js"></script>
+        <script src="/js/app.js" defer></script>
     </head>
     <body>
-        <div class="container">
+        <div class="container mx-auto">
         @yield('content')
         </div>
     </body>

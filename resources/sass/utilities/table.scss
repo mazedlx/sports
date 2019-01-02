@@ -1,3 +1,19 @@
 .cell {
   @apply border px-2 py-4 text-center;
 }
+
+.first {
+  @apply px-4 py-2 bg-green;
+}
+
+.second {
+  @apply px-4 py-2 bg-blue;
+}
+
+.last {
+  @apply px-4 py-2 bg-orange;
+}
+
+.penultimate {
+  @apply px-4 py-2 bg-yellow;
+}
