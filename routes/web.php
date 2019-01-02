@@ -6,8 +6,8 @@ Auth::routes(['register' => false]);
 Route::get('/', 'PagesController');
 Route::get('/sports', 'PagesController');
 
-Route::get('/pool/{year}/{location}', 'PoolController@show');
-Route::get('/sports/pool/{year}/{location}', 'PoolController@show');
+Route::get('/pool/{year}/{location}', 'ResultsController@show');
+Route::get('/sports/pool/{year}/{location}', 'ResultsController@show');
 
 Route::get('/game/{id}', 'GamesController@show');
 
