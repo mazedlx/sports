@@ -1,25 +1,19 @@
 <?php
 
-use App\Day;
-use App\Player;
-use App\Location;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/locations', function () {
-    return Location::all();
-});
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
 
-Route::get('/players', function () {
-    return Player::all();
-});
-
-Route::get('/locations/{location}/players', function ($location) {
-    return Location::with('players')->findOrFail($location);
-});
-
-Route::get('/locations/{location}/results', function ($location) {
-    return Location::with('results')->findOrFail($location);
-});
-
-Route::get('/days', function () {
-    return Day::with('games', 'games.winner', 'games.loser')->latest()->paginate(10);
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
 });
