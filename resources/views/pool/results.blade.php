@@ -7,15 +7,16 @@
     <table class="table table-auto border">
         <thead>
             <th class="cell">Datum</th>
-        @foreach($players as $player)
+        @forelse($players as $player)
             <th class="cell" colspan="2">
                 {{ $player->fullName }}
             </th>
-        @endforeach
+        @empty
+        @endforelse
             <th class="cell">Frames</th>
         </thead>
         <tbody>
-        @foreach($results as $result)
+        @forelse($results as $result)
             <tr>
                 <td class="cell">
                     <game-link
@@ -23,21 +24,26 @@
                         date="{{ $result->day()->first()->date->format('d.m.Y') }}"
                     ></game-link>
                 </td>
-            @foreach($players as $player)
+            @forelse($players as $player)
                 <td class="cell">{{ $result->ofPlayer($player)->ofDay($result->day()->first())->get()->first()->plus }}</td>
                 <td class="cell">{{ $result->ofPlayer($player)->ofDay($result->day()->first())->get()->first()->minus }}</td>
-            @endforeach
+            @empty
+            @endforelse
                 <td class="cell">{{ $result->day()->first()->frames }}</td>
             </tr>
-        @endforeach
+        @empty
+        @endforelse
         </tbody>
         <tfoot>
             <tr>
                 <th class="cell">Gesamt</th>
-            @foreach($players as $player)
+            @forelse($players as $player)
+                @if ($results-> count() > 0)
                 <th class="cell">{{ $results->first()->ofPlayer($player)->ofYear($year)->sum('plus') }}</th>
                 <th class="cell">{{ $results->first()->ofPlayer($player)->ofYear($year)->sum('minus') }}</th>
-            @endforeach
+                @endif
+            @empty
+            @endforelse
                 <th class="cell">{{ $totalFrames }}</th>
             </tr>
         </tfoot>
@@ -54,13 +60,14 @@
                 <th class="cell">Score</th>
             </thead>
             <tbody>
-                @foreach($scores_avg as $score_avg)
+                @forelse($scores_avg as $score_avg)
                 <tr>
                     <td class="cell">{{ $score_avg['0'] }}</td>
                     <td class="cell">{{ $score_avg['1'] }}</td>
                     <td class="cell">{{ $score_avg['2'] }}</td>
                 </tr>
-                @endforeach
+                @empty
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -74,13 +81,14 @@
                 <th class="cell">Score</th>
             </thead>
             <tbody>
-                @foreach($scores_total as $score_total)
+                @forelse($scores_total as $score_total)
                 <tr>
                     <td class="cell">{{ $score_total['0'] }}</td>
                     <td class="cell">{{ $score_total['1'] }}</td>
                     <td class="cell">{{ $score_total['2'] }}</td>
                 </tr>
-                @endforeach
+                @empty
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -94,13 +102,14 @@
                 <th class="cell">Score</th>
             </thead>
             <tbody>
-                @foreach($max_pluses  as $max_plus)
+                @forelse($max_pluses  as $max_plus)
                 <tr>
                     <td class="cell">{{ $max_plus['0'] }}</td>
                     <td class="cell">{{ $max_plus['1'] }}</td>
                     <td class="cell">{{ $max_plus['2'] }}</td>
                 </tr>
-                @endforeach
+                @empty
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -114,13 +123,14 @@
                 <th class="cell">Score</th>
             </thead>
             <tbody>
-                @foreach($max_minuses  as $max_minus)
+                @forelse($max_minuses  as $max_minus)
                 <tr>
                     <td class="cell">{{ $max_minus['0'] }}</td>
                     <td class="cell">{{ $max_minus['1'] }}</td>
                     <td class="cell">{{ $max_minus['2'] }}</td>
                 </tr>
-                @endforeach
+                @empty
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -134,13 +144,14 @@
                 <th class="cell">Score</th>
             </thead>
             <tbody>
-                @foreach($avg_pluses  as $avg_plus)
+                @forelse($avg_pluses  as $avg_plus)
                 <tr>
                     <td class="cell">{{ $avg_plus['0'] }}</td>
                     <td class="cell">{{ $avg_plus['1'] }}</td>
                     <td class="cell">{{ $avg_plus['2'] }}</td>
                 </tr>
-                @endforeach
+                @empty
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -154,13 +165,14 @@
                 <th class="cell">Score</th>
             </thead>
             <tbody>
-                @foreach($avg_minuses  as $avg_minus)
+                @forelse($avg_minuses  as $avg_minus)
                 <tr>
                     <td class="cell">{{ $avg_minus['0'] }}</td>
                     <td class="cell">{{ $avg_minus['1'] }}</td>
                     <td class="cell">{{ $avg_minus['2'] }}</td>
                 </tr>
-                @endforeach
+                @empty
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -176,12 +188,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($payers as $payer)
+                @forelse($payers as $payer)
                 <tr>
                     <td class="cell">{{ $payer->name }}</td>
                     <td class="cell">{{ $payer->cnt }}</td>
                 </tr>
-                @endforeach
+                @empty
+                @endforelse
             </tbody>
         </table>
     </div>
@@ -196,12 +209,13 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach($last_payers as $payer)
+            @forelse($last_payers as $payer)
                 <tr>
                     <td class="cell">{{ $payer->name }}</td>
                     <td class="cell">{{ $payer->date }}</td>
                 </tr>
-            @endforeach
+            @empty
+            @endforelse
             </tbody>
         </table>
     </div>
