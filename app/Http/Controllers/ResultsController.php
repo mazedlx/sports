@@ -6,6 +6,7 @@ use App\Day;
 use App\Location;
 use App\Player;
 use App\Result;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ResultsController extends Controller
@@ -21,7 +22,7 @@ class ResultsController extends Controller
 
     public function store(Request $request)
     {
-        $results = collect($request->only('player', 'plus', 'minus'))
+        collect($request->only('player', 'plus', 'minus'))
             ->transpose()
             ->map(function ($result) {
                 Result::create([
@@ -38,6 +39,43 @@ class ResultsController extends Controller
 
     public function show($year, Location $location)
     {
+        $date = Carbon::createFromFormat('Y', $year);
+        $start = $date->startOfYear()->format('Y-m-d');
+        $end = $date->endOfYear()->format('Y-m-d');
+        $rawResults = $location
+            ->results()
+            ->join('pool_day', 'pool_day.id', '=', 'pool_results.id_day')
+            ->join('pool_player', 'pool_player.id', '=', 'pool_results.id_player')
+            ->whereBetween('pool_day.date', [$start, $end])
+            ->orderBy('pool_day.date', 'asc')
+            ->orderBy('pool_player.name', 'asc')
+            ->get();
+
+        $results = [];
+        $sums = [];
+        foreach ($rawResults as $rawResult) {
+            $day = Carbon::createFromFormat('Y-m-d', $rawResult->date)->format('d.m.Y');
+            $player = $rawResult->firstname . ' ' . $rawResult->name;
+            $results[$day]['day_id'] = $rawResult->id_day;
+            $results[$day]['results'][$player] = [
+                'plus' => $rawResult->plus,
+                'minus' => $rawResult->minus,
+                'total_plus',
+            ];
+            $results[$day]['total'] = $rawResult->frames;
+        }
+
+        $sums = $location->results()
+            ->selectRaw(
+                'CONCAT(pool_player.firstname, " ", pool_player.name) AS name, SUM(pool_results.plus) AS sum_plus, SUM(pool_results.minus) AS sum_minus'
+            )->join('pool_day', 'pool_day.id', '=', 'pool_results.id_day')
+            ->join('pool_player', 'pool_player.id', '=', 'pool_results.id_player')
+            ->whereBetween('pool_day.date', [$start, $end])
+            ->orderBy('pool_day.date', 'asc')
+            ->orderBy('pool_player.name', 'asc')
+            ->groupBy('pool_player.id')
+            ->get();
+
         $scoresAvg = getRanking(
             Player::average($location, $year)->mapWithKeys(function ($player) {
                 return [$player->name => $player->score_avg];
@@ -115,11 +153,12 @@ class ResultsController extends Controller
             'payers' => $payers,
             'performances' => $performances,
             'players' => $location->players()->sortByName()->get(),
-            'results' => Result::hasLocation($location)->year($year)->sortByDate()->get(),
+            'results' => $results,
             'avgScores' => $scoresAvg,
             'totalScores' => $scoresTotal,
             'scores' => $scores,
             'totalFrames' => $location->totalFrames($year),
+            'sums' => $sums,
             'year' => $year,
         ]);
     }

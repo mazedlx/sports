@@ -27,10 +27,14 @@ class Result extends Model
         return $this->belongsTo(Day::class, 'id_day');
     }
 
+    public function player()
+    {
+        return $this->belongsTo(Player::class, 'id_player');
+    }
+
     public function scopeHasLocation($query, Location $location)
     {
-        return $query
-            ->join('pool_location', 'pool_location.id', '=', 'pool_results.id_location')
+        $query->join('pool_location', 'pool_location.id', '=', 'pool_results.id_location')
             ->where('pool_location.id', '=', $location->id);
     }
 

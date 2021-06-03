@@ -1,4 +1,4 @@
-@props(['players', 'results', 'year', 'totalFrames'])
+@props(['players', 'results', 'year', 'totalFrames', 'sums'])
 
 <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
     <table class="min-w-full divide-y divide-gray-200">
@@ -13,20 +13,19 @@
             </tr>
         </thead>
         <tbody>
-        @forelse ($results as $result)
+        @forelse ($results as $date => $result)
             <tr>
                 <td>
-                    <a
-                        href="{{ route('game', $result->day()->first()->id) }}"
-                        class="underline text-grey-900"
-                    >{{ $result->day()->first()->date->format('d.m.Y') }}</a>
+                    <a href="{{ route('game', $result['day_id']) }}" class="underline text-grey-900">
+                        {{ $date }}
+                    </a>
                 </td>
-            @forelse ($players as $player)
-                <td>{{ $result->ofPlayer($player)->ofDay($result->day()->first())->get()->first()->plus }}</td>
-                <td>{{ $result->ofPlayer($player)->ofDay($result->day()->first())->get()->first()->minus }}</td>
+            @forelse ($result['results'] as $player => $score)
+                <td>{{ $score['plus'] }}</td>
+                <td>{{ $score['minus'] }}</td>
             @empty
             @endforelse
-                <td >{{ $result->day()->first()->frames }}</td>
+                <td >{{ $result['total'] }}</td>
             </tr>
         @empty
         @endforelse
@@ -34,13 +33,10 @@
         <tfoot>
             <tr>
                 <th scope="col">Gesamt</th>
-        @forelse ($players as $player)
-            @if ($results-> count() > 0)
-                <th scope="col">{{ $results->first()->ofPlayer($player)->ofYear($year)->sum('plus') }}</th>
-                <th scope="col">{{ $results->first()->ofPlayer($player)->ofYear($year)->sum('minus') }}</th>
-            @endif
-        @empty
-        @endforelse
+            @foreach ($sums as $sum)
+            <th scope="col">{{ $sum->sum_plus }}</th>
+            <th scope="col">{{ $sum->sum_minus }}</th>
+            @endforeach
                 <th scope="col">{{ $totalFrames }}</th>
             </tr>
         </tfoot>

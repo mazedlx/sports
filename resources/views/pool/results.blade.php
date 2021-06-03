@@ -5,7 +5,13 @@
     <h1 class="text-3xl font-bold">{{ $location->name }} {{ $year }}</h1>
     <h2 class="py-4 text-2xl font-semibold">Results</h2>
 
-    <x-results :players="$players" :results="$results" :year="$year" :totalFrames="$totalFrames"/>
+    <x-results
+        :players="$players"
+        :results="$results"
+        :year="$year"
+        :totalFrames="$totalFrames"
+        :sums="$sums"
+    />
 
     <div class="flex flex-wrap w-full">
         <x-relative-ranking :avgScores="$avgScores" />
