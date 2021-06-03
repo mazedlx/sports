@@ -10,13 +10,13 @@ class Day extends Model
     protected $fillable = [
         'date',
         'frames',
-        'id_payer'
+        'id_payer',
     ];
 
     protected $table = 'pool_day';
 
     protected $casts = [
-        'date' => 'date'
+        'date' => 'date',
     ];
 
     public function player()
@@ -37,6 +37,7 @@ class Day extends Model
     public function scopeYear($query, $year)
     {
         $dt = Carbon::create($year, 1, 1);
+
         return $query->whereBetween('pool_day.date', [
             $dt->startOfYear()->format('Y-m-d'),
             $dt->endOfYear()->format('Y-m-d'),

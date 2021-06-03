@@ -2,20 +2,15 @@
 
 namespace App;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Player extends Model
 {
     const LOCATION_1 = 2;
     const LOCATION_2 = 8;
 
-    /**
-     * The table name for players
-     *
-     * @var string
-     */
     protected $table = 'pool_player';
 
     public function locations()
@@ -37,7 +32,7 @@ class Player extends Model
             ->join('pool_player_location', 'pool_player_location.playerid', '=', 'pool_player.id')
             ->whereIn('pool_player_location.locid', [
                 self::LOCATION_1,
-                self::LOCATION_2
+                self::LOCATION_2,
             ])
             ->orderBy('pool_player.name', 'asc')
             ->get();
@@ -83,7 +78,7 @@ class Player extends Model
             ->whereBetween('pool_day.date', [
                 $dt->startOfYear()->format('Y-m-d'),
                 $dt->endOfYear()->format('Y-m-d'),
-                ])
+            ])
                 ->groupBy('pool_player.id')
                 ->get();
     }
@@ -256,10 +251,10 @@ class Player extends Model
         }
 
         foreach ($results as $team => $vals) {
-            if (! array_key_exists('plus', $vals)) {
+            if (! \array_key_exists('plus', $vals)) {
                 $vals['plus'] = 0;
             }
-            if (! array_key_exists('minus', $vals)) {
+            if (! \array_key_exists('minus', $vals)) {
                 $vals['minus'] = 1;
             }
             $results[$team]['score'] = number_format($vals['plus'] / $vals['minus'], 3);
@@ -271,13 +266,13 @@ class Player extends Model
         arsort($scores);
         foreach ($scores as $team => $score) {
             $top[] = $team;
-            if (! array_key_exists('plus', $results[$team])) {
+            if (! \array_key_exists('plus', $results[$team])) {
                 $results[$team]['plus'] = 0;
             }
-            if (! array_key_exists('minus', $results[$team])) {
+            if (! \array_key_exists('minus', $results[$team])) {
                 $results[$team]['minus'] = 0;
             }
-            if ($scores[$team] == '') {
+            if ('' === $scores[$team]) {
                 $scores[$team] = 0.000;
             }
         }
@@ -285,6 +280,7 @@ class Player extends Model
         if ($grid) {
             return $scores;
         }
+
         return $results;
     }
 

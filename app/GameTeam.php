@@ -9,7 +9,7 @@ class GameTeam extends Model
     protected $fillable = [
         'id_game',
         'id_team',
-        'result'
+        'result',
     ];
 
     protected $table = 'pool_game_team';

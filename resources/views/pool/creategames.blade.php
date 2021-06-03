@@ -5,7 +5,7 @@
 <form action="{{ route('games.store') }}" method="POST">
     @csrf
     <div class="w-1/2">
-    @foreach(range(0, $frames-1) as $frame)
+    @foreach (range(0, $frames-1) as $frame)
         <div class="flex items-center justify-between py-2">
             <label class="w-1/3" for="">Game #{{ $frame }}</label>
             <select class="w-1/3" name="winner[]">

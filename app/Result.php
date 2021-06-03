@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class Result extends Model
 {
@@ -12,7 +12,7 @@ class Result extends Model
         'id_player',
         'id_location',
         'plus',
-        'minus'
+        'minus',
     ];
 
     protected $table = 'pool_results';
@@ -21,6 +21,7 @@ class Result extends Model
     {
         return $this->belongsTo(Location::class, 'id_location');
     }
+
     public function day()
     {
         return $this->belongsTo(Day::class, 'id_day');

@@ -2,26 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Day;
 use App\Game;
-use App\Team;
-use App\Location;
 use App\GameTeam;
-use App\Http\Requests;
+use App\Location;
+use App\Team;
+use Illuminate\Http\Request;
 
 class GamesController extends Controller
 {
-    public function show(Day $day)
-    {
-        $games = $day->games()->get();
-
-        return view('pool.games', [
-            'games' => $games,
-        ]);
-    }
-
     public function create(Day $day, Location $location)
     {
         return view('pool.creategames', [
@@ -54,6 +43,15 @@ class GamesController extends Controller
                 ]);
             });
 
-        return redirect("/pool/" . date('Y') . "/{$request->location_id}");
+        return redirect('/pool/' . date('Y') . "/{$request->location_id}");
+    }
+
+    public function show(Day $day)
+    {
+        $games = $day->games()->get();
+
+        return view('pool.games', [
+            'games' => $games,
+        ]);
     }
 }

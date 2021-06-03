@@ -8,7 +8,7 @@ class Game extends Model
 {
     protected $fillable = [
         'id_day',
-        'game_no'
+        'game_no',
     ];
 
     protected $table = 'pool_game';

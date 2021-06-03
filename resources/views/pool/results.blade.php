@@ -7,7 +7,7 @@
     <table class="table table-auto border">
         <thead>
             <th class="cell">Datum</th>
-        @forelse($players as $player)
+        @forelse ($players as $player)
             <th class="cell" colspan="2">
                 {{ $player->fullName }}
             </th>
@@ -16,7 +16,7 @@
             <th class="cell">Frames</th>
         </thead>
         <tbody>
-        @forelse($results as $result)
+        @forelse ($results as $result)
             <tr>
                 <td class="cell">
                     <game-link
@@ -24,7 +24,7 @@
                         date="{{ $result->day()->first()->date->format('d.m.Y') }}"
                     ></game-link>
                 </td>
-            @forelse($players as $player)
+            @forelse ($players as $player)
                 <td class="cell">{{ $result->ofPlayer($player)->ofDay($result->day()->first())->get()->first()->plus }}</td>
                 <td class="cell">{{ $result->ofPlayer($player)->ofDay($result->day()->first())->get()->first()->minus }}</td>
             @empty
@@ -37,7 +37,7 @@
         <tfoot>
             <tr>
                 <th class="cell">Gesamt</th>
-            @forelse($players as $player)
+            @forelse ($players as $player)
                 @if ($results-> count() > 0)
                 <th class="cell">{{ $results->first()->ofPlayer($player)->ofYear($year)->sum('plus') }}</th>
                 <th class="cell">{{ $results->first()->ofPlayer($player)->ofYear($year)->sum('minus') }}</th>
@@ -60,7 +60,7 @@
                 <th class="cell">Score</th>
             </thead>
             <tbody>
-                @forelse($scores_avg as $score_avg)
+                @forelse ($scores_avg as $score_avg)
                 <tr>
                     <td class="cell">{{ $score_avg['0'] }}</td>
                     <td class="cell">{{ $score_avg['1'] }}</td>
@@ -81,7 +81,7 @@
                 <th class="cell">Score</th>
             </thead>
             <tbody>
-                @forelse($scores_total as $score_total)
+                @forelse ($scores_total as $score_total)
                 <tr>
                     <td class="cell">{{ $score_total['0'] }}</td>
                     <td class="cell">{{ $score_total['1'] }}</td>
@@ -102,7 +102,7 @@
                 <th class="cell">Score</th>
             </thead>
             <tbody>
-                @forelse($max_pluses  as $max_plus)
+                @forelse ($max_pluses  as $max_plus)
                 <tr>
                     <td class="cell">{{ $max_plus['0'] }}</td>
                     <td class="cell">{{ $max_plus['1'] }}</td>
@@ -123,7 +123,7 @@
                 <th class="cell">Score</th>
             </thead>
             <tbody>
-                @forelse($max_minuses  as $max_minus)
+                @forelse ($max_minuses  as $max_minus)
                 <tr>
                     <td class="cell">{{ $max_minus['0'] }}</td>
                     <td class="cell">{{ $max_minus['1'] }}</td>
@@ -144,7 +144,7 @@
                 <th class="cell">Score</th>
             </thead>
             <tbody>
-                @forelse($avg_pluses  as $avg_plus)
+                @forelse ($avg_pluses  as $avg_plus)
                 <tr>
                     <td class="cell">{{ $avg_plus['0'] }}</td>
                     <td class="cell">{{ $avg_plus['1'] }}</td>
@@ -165,7 +165,7 @@
                 <th class="cell">Score</th>
             </thead>
             <tbody>
-                @forelse($avg_minuses  as $avg_minus)
+                @forelse ($avg_minuses  as $avg_minus)
                 <tr>
                     <td class="cell">{{ $avg_minus['0'] }}</td>
                     <td class="cell">{{ $avg_minus['1'] }}</td>
@@ -177,7 +177,7 @@
         </table>
     </div>
 
-    @if($location->id == 2)
+    @if ($location->id == 2)
     <div class="px-4">
         <h2 class="py-4">Wer hat wie oft bezahlt</h2>
         <table class="table table-auto border">
@@ -188,7 +188,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($payers as $payer)
+                @forelse ($payers as $payer)
                 <tr>
                     <td class="cell">{{ $payer->name }}</td>
                     <td class="cell">{{ $payer->cnt }}</td>
@@ -209,7 +209,7 @@
                 </tr>
             </thead>
             <tbody>
-            @forelse($last_payers as $payer)
+            @forelse ($last_payers as $payer)
                 <tr>
                     <td class="cell">{{ $payer->name }}</td>
                     <td class="cell">{{ $payer->date }}</td>
@@ -229,7 +229,7 @@
                 <th class="cell">hat wie oft gefehlt</th>
             </thead>
             <tbody>
-                @foreach($absentees  as $absent)
+                @foreach ($absentees  as $absent)
                 <tr>
                     <td class="cell">{{ $absent->name }}</td>
                     <td class="cell">{{ $absent->cnt }}</td>
@@ -251,7 +251,7 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach($performances as $team => $performance)
+            @foreach ($performances as $team => $performance)
                 <tr>
                     <td class="cell">{{ $team }}</td>
                     <td class="cell">{{ $performance['score'] }}</td>
@@ -267,7 +267,7 @@
         <h2 class="py-4">Performance-Matrix</h2>
         <table class="table table-auto border">
             <thead>
-            @if($location->id == 2)
+            @if ($location->id == 2)
                 <tr>
                     <th class="cell"></th>
                     <th class="cell">B</th>
@@ -334,7 +334,7 @@
                     <td class="cell">{!! $scores['W'] !!}</td>
                 </tr>
             </tbody>
-            @elseif($location->id == 8)
+            @elseif ($location->id == 8)
                 <tr>
                     <th class="cell"></th>
                     <th class="cell">B</th>

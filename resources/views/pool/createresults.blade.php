@@ -5,7 +5,7 @@
 <form action="{{ route('results.store') }}" method="POST">
     @csrf
     <div class="w-1/2">
-    @foreach($players as $player)
+    @foreach ($players as $player)
         <div class="flex items-center justify-between py-2">
             <label for="" class="w-1/3">{{ $player->fullName }}</label>
             <input class="w-1/3 border px-4 py-2" type="number" name="plus[]" value="0">

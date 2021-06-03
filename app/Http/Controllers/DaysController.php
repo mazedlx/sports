@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Day;
-use App\Player;
 use App\Location;
+use App\Player;
 use Illuminate\Http\Request;
 
 class DaysController extends Controller
@@ -17,12 +17,12 @@ class DaysController extends Controller
         return view('pool.createday', [
             'locations' => Location::whereIn('id', [
                 self::LOCATION_1,
-                self::LOCATION_2
+                self::LOCATION_2,
             ])
                 ->pluck('name', 'id'),
             'players' => collect(Player::fullnames())
                 ->pluck('name', 'id')
-                ->prepend('Alle', 0)
+                ->prepend('Alle', 0),
         ]);
     }
 
