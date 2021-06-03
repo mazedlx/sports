@@ -81,7 +81,7 @@ class ResultsController extends Controller
         );
 
         $payers = Player::payer($location, $year);
-        $last_payers = Player::lastPayer($location, $year);
+        $lastPayers = Player::lastPayer($location, $year);
         $absentees = Player::absent($location, $year);
         $performances = Player::performance($location, $year, false);
 
@@ -90,34 +90,34 @@ class ResultsController extends Controller
         $j = \count($scores);
         foreach ($scores as $team => $score) {
             if (1 === $i) {
-                $scores[$team] = '<span class="first">' . $score . '</span>';
+                $scores[$team] = '<span class="w-full h-full px-2 py-2 bg-green-500">' . $score . '</span>';
             }
             if (2 === $i) {
-                $scores[$team] = '<span class="second">' . $score . '</span>';
+                $scores[$team] = '<span class="w-full h-full px-2 py-2 bg-blue-500">' . $score . '</span>';
             }
             if ($i === $j) {
-                $scores[$team] = '<span class="last">' . $score . '</span>';
+                $scores[$team] = '<span class="w-full h-full px-2 py-2 bg-yellow-600">' . $score . '</span>';
             }
             if ($i === $j - 1) {
-                $scores[$team] = '<span class="penultimate">' . $score . '</span>';
+                $scores[$team] = '<span class="w-full h-full px-2 py-2 bg-yellow-500">' . $score . '</span>';
             }
             $i++;
         }
 
         return view('pool.results', [
             'absentees' => $absentees,
-            'avg_minuses' => $avgMinuses,
-            'avg_pluses' => $avgPluses,
-            'last_payers' => $last_payers,
+            'avgMinuses' => $avgMinuses,
+            'avgPluses' => $avgPluses,
+            'lastPayers' => $lastPayers,
             'location' => $location,
-            'max_minuses' => $maxMinuses,
-            'max_pluses' => $maxPluses,
+            'maxMinuses' => $maxMinuses,
+            'maxPluses' => $maxPluses,
             'payers' => $payers,
             'performances' => $performances,
             'players' => $location->players()->sortByName()->get(),
             'results' => Result::hasLocation($location)->year($year)->sortByDate()->get(),
-            'scores_avg' => $scoresAvg,
-            'scores_total' => $scoresTotal,
+            'avgScores' => $scoresAvg,
+            'totalScores' => $scoresTotal,
             'scores' => $scores,
             'totalFrames' => $location->totalFrames($year),
             'year' => $year,

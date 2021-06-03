@@ -34,7 +34,7 @@
         </div>
 
         <div class="flex items-center justify-end py-2">
-            <button type="submit" class="border px-4 py-2 hover:bg-grey-darker hover:text-white">Weiter</button>
+            <button type="submit" class="border px-4 py-2 hover:bg-grey-800 hover:text-white">Weiter</button>
         </div>
     </div>
 </form>

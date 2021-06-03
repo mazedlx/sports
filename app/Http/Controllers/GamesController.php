@@ -51,6 +51,7 @@ class GamesController extends Controller
         $games = $day->games()->get();
 
         return view('pool.games', [
+            'day' => $day,
             'games' => $games,
         ]);
     }

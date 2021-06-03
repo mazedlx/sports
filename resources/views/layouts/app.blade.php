@@ -5,12 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>sports.mazedlx.net</title>
-        <link rel="stylesheet" href="/css/app.css">
-        <script src="/js/app.js" defer></script>
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body>
-        <div class="container mx-auto">
+    <body class="bg-gray-50 antialiased">
         @yield('content')
-        </div>
     </body>
 </html>

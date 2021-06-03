@@ -1,21 +1,17 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 
 @section('content')
-<h1>Pool</h1>
-<ul class="list-reset">
-@foreach (range(date('Y'), 2006) as $year)
-    @if ($year >= 2015)
-        <li class="px-4 py-1">
-            <a class="text-grey-darkest hover:no-underline" href="pool/{{ $year }}/{{ $locationIdOne }}">{{ $year }} WN I</a>
-        </li>
-        <li class="px-4 py-1">
-            <a class="text-grey-darkest hover:no-underline" href="pool/{{ $year }}/{{ $locationIdTwo }}">{{ $year }} WN II</a>
-        </li>
-    @else
-        <li class="px-4 py-1">
-            <a class="text-grey-darkest hover:no-underline" href="pool/{{ $year }}/{{ $locationIdOne }}}">{{ $year }}</a>
-        </li>
-    @endif
-@endforeach
-</ul>
+<div class="w-5/6 mx-auto">
+    <h1 class="text-3xl font-bold">Pool</h1>
+    <div class="flex flex-col space-y-2">
+    @foreach (range(date('Y'), 2006) as $year)
+        @if ($year >= 2015)
+        <a class="text-lg underline" href="pool/{{ $year }}/{{ $locationIdOne }}">{{ $year }} WN I</a>
+        <a class="text-lg underline" href="pool/{{ $year }}/{{ $locationIdTwo }}">{{ $year }} WN II</a>
+        @else
+        <a class="text-lg underline" href="pool/{{ $year }}/{{ $locationIdOne }}}">{{ $year }}</a>
+        @endif
+    @endforeach
+    </div>
+</div>
 @endsection

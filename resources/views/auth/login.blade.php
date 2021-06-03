@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="border rounded px-4 py-2 hover:bg-green-dark hover:text-white hover:border-green-dark">
+            <button type="submit" class="border rounded px-4 py-2 hover:bg-green-600 hover:text-white hover:border-green-600">
                 {{ __('Login') }}
             </button>
         </form>
