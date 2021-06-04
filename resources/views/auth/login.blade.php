@@ -1,8 +1,8 @@
-@extends('layouts.layout')
+@extends('layouts.app')
 
 @section('content')
-<div class="flex w-1/2 mx-auto flex-col">
-    <div class="text-2xl pb-2">{{ __('Login') }}</div>
+<div class="flex flex-col w-1/2 mx-auto">
+    <div class="pb-2 text-2xl">{{ __('Login') }}</div>
 
     <div class="flex">
         <form method="POST" action="{{ route('login') }}" class="flex flex-col border-red-500">
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="border rounded px-4 py-2 hover:bg-green-600 hover:text-white hover:border-green-600">
+            <button type="submit" class="px-4 py-2 border rounded hover:bg-green-600 hover:text-white hover:border-green-600">
                 {{ __('Login') }}
             </button>
         </form>
