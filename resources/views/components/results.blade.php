@@ -1,7 +1,7 @@
 @props(['players', 'results', 'year', 'totalFrames', 'sums'])
 
 <div
-    class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg"
+    x-cloak
     x-data="{
         games: [],
         date: '',
@@ -18,6 +18,7 @@
         }
     }"
     @keydown.escape="showModal = false"
+    class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg"
 >
     <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
