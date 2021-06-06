@@ -19,6 +19,11 @@ class GameTeam extends Model
         return $this->hasMany(Game::class, 'id');
     }
 
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'id_team');
+    }
+
     public function teamName()
     {
         return Team::findOrFail($this->id_team)->team;

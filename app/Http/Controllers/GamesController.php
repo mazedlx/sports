@@ -48,10 +48,10 @@ class GamesController extends Controller
 
     public function show(Day $day)
     {
-        $games = $day->games()->get();
+        $games = $day->games()->with('winner.team', 'loser.team')->get();
 
-        return view('pool.games', [
-            'day' => $day,
+        return response()->json([
+            'date' => $day->date->format('d.m.Y'),
             'games' => $games,
         ]);
     }

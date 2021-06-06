@@ -11,7 +11,7 @@ Route::get('sports', 'PagesController');
 Route::get('pool/{year}/{location}', 'ResultsController@show');
 Route::get('sports/pool/{year}/{location}', 'ResultsController@show');
 
-Route::get('game/{day}', 'GamesController@show')->name('game');
+Route::get('games/{day}', 'GamesController@show')->name('game');
 
 Route::middleware('auth')->group(function () {
     Route::get('create/day', 'DaysController@create');
