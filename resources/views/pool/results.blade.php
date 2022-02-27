@@ -14,7 +14,6 @@
     />
 
     <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-
         <x-ranking-table
             heading="Relatives Ranking"
             :data="$avgScores"
@@ -59,7 +58,11 @@
             field="cnt"
         />
 
-    <x-performance :performances="$performances" />
+    <x-performance
+        class="col-span-2"
+        :performances="$performances"
+    />
+
     <x-performance-matrix :location="$location" :scores="$scores" />
     </div>
 </div>
