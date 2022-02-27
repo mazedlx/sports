@@ -39,6 +39,21 @@
                     >
                         Wiener Neustadt II
                     </a>
+                    @auth
+                    <a
+                        href="{{ route('create') }}"
+                        class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 @if(request()->routeIs('create')) border-green-500 text-gray-900 @else border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 @endif"
+                    >
+                        Create
+                    </a>
+                    @else
+                    <a
+                        href="{{ route('login') }}"
+                        class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 @if(request()->routeIs('login')) border-green-500 text-gray-900 @else border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 @endif"
+                    >
+                        Login
+                    </a>
+                    @endauth
                 </div>
             </div>
             @auth

@@ -21,7 +21,7 @@ Route::get('pool/{year}/{location}', [ResultsController::class, 'show'])
 Route::get('games/{day}', [GamesController::class, 'show'])->name('game');
 
 Route::middleware('auth')->group(function () {
-    Route::get('create/day', [DaysController::class, 'create']);
+    Route::get('create/day', [DaysController::class, 'create'])->name('create');
     Route::get(
         'create/results/{day}/{location}',
         [ResultsController::class, 'create']
