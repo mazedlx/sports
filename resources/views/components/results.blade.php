@@ -20,48 +20,75 @@
     @keydown.escape="showModal = false"
     class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg"
 >
-    <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-            <tr class="">
-                <th scope="col">Datum</th>
-            @forelse ($players as $player)
-                <th scope="col" colspan="2">{{ $player->fullName }}</th>
-            @empty
-            @endforelse
-                <th scope="col">Frames</th>
-            </tr>
-        </thead>
-        <tbody>
-        @forelse ($results as $date => $result)
-            <tr>
-                <td>
-                    <a @click.prevent="getGames({{ $result['day_id'] }})" href="{{ route('game', $result['day_id']) }}" class="underline text-grey-900">
-                        {{ $date }}
-                    </a>
-
-                </td>
-            @forelse ($result['results'] as $player => $score)
-                <td>{{ $score['plus'] }}</td>
-                <td>{{ $score['minus'] }}</td>
-            @empty
-            @endforelse
-                <td >{{ $result['total'] }}</td>
-            </tr>
-        @empty
-        @endforelse
-        </tbody>
-        <tfoot>
-            <tr>
-                <th scope="col">Gesamt</th>
-            @foreach ($sums as $sum)
-            <th scope="col">{{ $sum->sum_plus }}</th>
-            <th scope="col">{{ $sum->sum_minus }}</th>
-            @endforeach
-                <th scope="col">{{ $totalFrames }}</th>
-            </tr>
-        </tfoot>
-    </table>
-
+    <div class="flex flex-col">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th
+                                    scope="col"
+                                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                                >Datum</th>
+                                @forelse ($players as $player)
+                                <th
+                                    scope="col"
+                                    colspan="2"
+                                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                                >{{ $player->fullName }}</th>
+                                @empty
+                                @endforelse
+                                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">Frames</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @forelse ($results as $date => $result)
+                            <tr class="@if($loop->index % 2 === 0) bg-white @else bg-gray-50 @endif">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                    <a
+                                        @click.prevent="getGames({{ $result['day_id'] }})"
+                                        href="{{ route('game', $result['day_id']) }}"
+                                        class="underline text-grey-900"
+                                    >{{ $date }}</a>
+                                </td>
+                            @forelse ($result['results'] as $player => $score)
+                                <td class="px-6 py-4 text-sm font-medium text-right text-gray-900 whitespace-nowrap">{{ $score['plus'] }}</td>
+                                <td class="px-6 py-4 text-sm font-medium text-right text-gray-900 whitespace-nowrap">{{ $score['minus'] }}</td>
+                            @empty
+                            @endforelse
+                            <td class="px-6 py-4 text-sm font-medium text-right text-gray-900 whitespace-nowrap">{{ $result['total'] }}</td>
+                            </tr>
+                        @empty
+                        @endforelse
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th
+                                    scope="col"
+                                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                                >Gesamt</th>
+                            @foreach ($sums as $sum)
+                                <th
+                                    scope="col"
+                                    class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+                                >{{ $sum->sum_plus }}</th>
+                                <th
+                                    scope="col"
+                                    class="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase"
+                                >{{ $sum->sum_minus }}</th>
+                            @endforeach
+                                <th
+                                    scope="col"
+                                    class="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase"
+                                >{{ $totalFrames }}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div
         class="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
