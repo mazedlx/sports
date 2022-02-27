@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class Player extends Model
 {
-    const LOCATION_1 = 2;
-    const LOCATION_2 = 8;
-
     protected $table = 'pool_player';
 
     public function locations()
@@ -31,8 +28,8 @@ class Player extends Model
             ->select(DB::raw('id, CONCAT(pool_player.firstname," ",pool_player.name) AS name'))
             ->join('pool_player_location', 'pool_player_location.playerid', '=', 'pool_player.id')
             ->whereIn('pool_player_location.locid', [
-                self::LOCATION_1,
-                self::LOCATION_2,
+                Location::LOCATION_1,
+                Location::LOCATION_2,
             ])
             ->orderBy('pool_player.name', 'asc')
             ->get();
@@ -79,8 +76,8 @@ class Player extends Model
                 $dt->startOfYear()->format('Y-m-d'),
                 $dt->endOfYear()->format('Y-m-d'),
             ])
-                ->groupBy('pool_player.id')
-                ->get();
+            ->groupBy('pool_player.id')
+            ->get();
     }
 
     public function scopeMaxPlus($query, Location $location, $year)

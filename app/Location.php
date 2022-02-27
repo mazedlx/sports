@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
+    public const LOCATION_1 = 2;
+    public const LOCATION_2 = 8;
+
     protected $table = 'pool_location';
 
     public function players()

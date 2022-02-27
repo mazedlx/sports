@@ -13,10 +13,10 @@ Auth::routes([
     'verify' => false,   // Routes of Email Verification
 ]);
 
-Route::get('/', PagesController::class);
-Route::get('sports', PagesController::class);
+Route::get('/', PagesController::class)->name('/');
 
-Route::get('pool/{year}/{location}', [ResultsController::class, 'show']);
+Route::get('pool/{year}/{location}', [ResultsController::class, 'show'])
+    ->name('results');
 
 Route::get('games/{day}', [GamesController::class, 'show'])->name('game');
 

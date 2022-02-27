@@ -9,15 +9,12 @@ use Illuminate\Http\Request;
 
 class DaysController extends Controller
 {
-    const LOCATION_1 = 2;
-    const LOCATION_2 = 8;
-
     public function create()
     {
         return view('pool.createday', [
             'locations' => Location::whereIn('id', [
-                self::LOCATION_1,
-                self::LOCATION_2,
+                Location::LOCATION_1,
+                Location::LOCATION_2,
             ])
                 ->pluck('name', 'id'),
             'players' => collect(Player::fullnames())
