@@ -3,10 +3,10 @@
 @task('deploy',  ['on' => ['web']])
     cd /var/www/html/sports.mazedlx.net
     git stash
-    php artisan down
+    php8.0 artisan down
     git pull origin main
     composer install --no-dev
-    php artisan optimize
-    php artisan queue:restart
-    php artisan up
+    php8.0 artisan optimize
+    php8.0 artisan queue:restart
+    php8.0 artisan up
 @endtask
