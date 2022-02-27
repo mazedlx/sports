@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DaysController;
+use App\Http\Controllers\GamesController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ResultsController;
 use Illuminate\Support\Facades\Auth;
@@ -16,16 +17,24 @@ Route::get('/', PagesController::class);
 Route::get('sports', PagesController::class);
 
 Route::get('pool/{year}/{location}', [ResultsController::class, 'show']);
-Route::get('sports/pool/{year}/{location}', [ResultsController::class, 'show']);
 
 Route::get('games/{day}', [GamesController::class, 'show'])->name('game');
 
 Route::middleware('auth')->group(function () {
     Route::get('create/day', [DaysController::class, 'create']);
-    Route::get('create/results/{day}/{location}', [ResultsController::class, 'create']);
-    Route::get('create/games/{day}/{location}', [GamesController::class, 'create']);
+    Route::get(
+        'create/results/{day}/{location}',
+        [ResultsController::class, 'create']
+    );
+    Route::get(
+        'create/games/{day}/{location}',
+        [GamesController::class, 'create']
+    );
 
-    Route::post('store/day', [DaysController::class, 'store'])->name('days.store');
-    Route::post('store/results', [ResultsController::class, 'store'])->name('results.store');
-    Route::post('store/games', [GamesController::class, 'store'])->name('games.store');
+    Route::post('store/day', [DaysController::class, 'store'])
+        ->name('days.store');
+    Route::post('store/results', [ResultsController::class, 'store'])
+        ->name('results.store');
+    Route::post('store/games', [GamesController::class, 'store'])
+        ->name('games.store');
 });
