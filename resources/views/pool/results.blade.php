@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="w-5/6 mx-auto">
+<div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
     <h1 class="text-3xl font-bold">{{ $location->name }} {{ $year }}</h1>
     <h2 class="py-4 text-2xl font-semibold">Results</h2>
 
@@ -13,22 +13,54 @@
         :sums="$sums"
     />
 
-    <div class="flex flex-wrap w-full">
-        <x-relative-ranking :avgScores="$avgScores" />
-        <x-absolute-ranking :totalScores="$totalScores" />
-        <x-max-pluses :maxPluses="$maxPluses" />
-        <x-max-minuses :maxMinuses="$maxMinuses" />
-        <x-avg-pluses :avgPluses="$avgPluses" />
-        <x-avg-minus :avgMinuses="$avgMinuses" />
+    <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+
+        <x-ranking-table
+            heading="Relatives Ranking"
+            :data="$avgScores"
+        />
+        <x-ranking-table
+            heading="Absolutes Ranking"
+            :data="$totalScores"
+        />
+        <x-ranking-table
+            heading="Ranking Max. Plus"
+            :data="$maxPluses"
+        />
+        <x-ranking-table
+            heading="Ranking Max. Minus"
+            :data="$maxMinuses"
+        />
+        <x-ranking-table
+            heading="Ranking Avg. Plus"
+            :data="$avgPluses"
+        />
+        <x-ranking-table
+            heading="Ranking Avg. Minus"
+            :data="$avgMinuses"
+        />
 
     @if ($location->id == 2)
-        <x-payers :payers="$payers" />
-        <x-last-payers :lastPayers="$lastPayers" />
+        <x-payers-and-absentees-table
+            heading="Wer hat wie oft bezahlt"
+            :data="$payers"
+            field="cnt"
+        />
+        <x-payers-and-absentees-table
+            heading="Letzte Zahler"
+            :data="$lastPayers"
+            field="date"
+        />
     @endif
 
-        <x-absentees :absentees="$absentees" />
-        <x-performance :performances="$performances" />
-        <x-performance-matrix :location="$location" :scores="$scores" />
+        <x-payers-and-absentees-table
+            heading="Wer hat wie oft gefehlt"
+            :data="$absentees"
+            field="cnt"
+        />
+
+    <x-performance :performances="$performances" />
+    <x-performance-matrix :location="$location" :scores="$scores" />
     </div>
 </div>
 @endsection
