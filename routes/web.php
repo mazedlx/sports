@@ -3,7 +3,13 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Auth::routes(['register' => false]);
+Auth::routes([
+    'register' => false, // Routes of Registration
+    'reset' => false,    // Routes of Password Reset
+    'verify' => false,   // Routes of Email Verification
+]);
+
+
 
 Route::get('/', 'PagesController');
 Route::get('sports', 'PagesController');
