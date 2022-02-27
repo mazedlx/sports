@@ -58,12 +58,14 @@
             field="cnt"
         />
 
-    <x-performance
-        class="col-span-2"
-        :performances="$performances"
-    />
+        <x-performance
+            :performances="$performances"
+        />
 
-    <x-performance-matrix :location="$location" :scores="$scores" />
+        <x-performance-matrix
+            :location="$location"
+            :scores="$scores"
+        />
     </div>
 </div>
 @endsection
