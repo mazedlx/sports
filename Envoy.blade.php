@@ -6,6 +6,7 @@
     php artisan down
     git pull origin main
     composer install --no-dev
+    composer upgrade --no-dev
     php artisan optimize
     php artisan up
 @endtask
