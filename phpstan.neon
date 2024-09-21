@@ -1,5 +1,5 @@
 includes:
-    - ./vendor/nunomaduro/larastan/extension.neon
+    - ./vendor/larastan/larastan/extension.neon
 
 parameters:
 
@@ -10,9 +10,12 @@ parameters:
     level: 5
 
     ignoreErrors:
-        - '#PHPDoc tag @var#'
-
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder<App\\Player>::mapWithKeys#'
+        - '#Illuminate\\Database\\Eloquent\\Builder<App\\Player>#'
+        
     excludePaths:
-        - ./*/*/FileToBeExcluded.php
-
-    checkMissingIterableValueType: false
+        - app/Providers/*.php
+        - app/Http/Middleware/*.php
+        - app/Http/Kernel.php
+        - app/Http/Controllers/Auth/*.php
+        - app/Exceptions/Handler.php

@@ -5,6 +5,10 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int       $frames
+ * @property \DateTime $date
+ */
 class Day extends Model
 {
     protected $fillable = [

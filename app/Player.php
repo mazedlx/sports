@@ -6,6 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @property string $firstname
+ * @property string $name
+ */
 class Player extends Model
 {
     protected $table = 'pool_player';

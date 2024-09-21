@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $team
+ */
 class Team extends Model
 {
     protected $table = 'pool_team';

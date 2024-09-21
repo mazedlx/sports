@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id_team
+ */
 class GameTeam extends Model
 {
     protected $fillable = [
