@@ -18,12 +18,12 @@
         }
     }"
     @keydown.escape="showModal = false"
-    class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg"
+    class="overflow-hidden border-b border-gray-200 shadow-sm sm:rounded-lg"
 >
     <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+                <div class="overflow-hidden border-b border-gray-200 shadow-sm sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
@@ -97,14 +97,14 @@
         x-transition:enter-start="opacity-0 scale-90"
         x-transition:enter-end="opacity-100 scale-100"
     >
-        <div class="w-1/3 px-6 py-4 mx-auto text-left bg-white rounded shadow-lg">
+        <div class="w-1/3 px-6 py-4 mx-auto text-left bg-white rounded-sm shadow-lg">
             <div class="w-5/6 mx-auto"
                 @click.away="showModal = false"
             >
                 <h1 class="text-3xl font-bold" x-text="`Games für ${date}`"></h1>
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                        <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+                        <div class="overflow-hidden border-b border-gray-200 shadow-sm sm:rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>

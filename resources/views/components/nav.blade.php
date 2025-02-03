@@ -7,7 +7,7 @@
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <div class="flex items-center flex-shrink-0">
+                <div class="flex items-center shrink-0">
                     <x-tabler-sport-billard class="block w-10 h-10 text-green-600" />
                 </div>
                 <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
@@ -58,7 +58,7 @@
                             <button
                                 type="button"
                                 @click="dropdownOpen = !dropdownOpen"
-                                class="flex items-center max-w-xs text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                class="flex items-center max-w-xs text-sm bg-white rounded-full focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                 id="user-menu-button"
                                 aria-expanded="false"
                                 aria-haspopup="true"
@@ -80,7 +80,7 @@
                             x-transition:leave="transition ease-in duration-75"
                             x-transition:leave-start="transform opacity-100 scale-100"
                             x-transition:leave-end="transform opacity-0 scale-95"
-                            class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                            class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-hidden"
                             role="menu"
                             aria-orientation="vertical"
                             aria-labelledby="user-menu-button"
@@ -120,7 +120,7 @@
                 <button
                     @click="dropdownOpen = !dropdownOpen"
                     type="button"
-                    class="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    class="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                     aria-controls="mobile-menu"
                     aria-expanded="false"
                 >
@@ -169,7 +169,7 @@
         @auth
             <div class="pt-4 pb-3 border-t border-gray-200">
                 <div class="flex items-center px-4">
-                    <div class="flex-shrink-0">
+                    <div class="shrink-0">
                         <img
                             class="w-10 h-10 rounded-full"
                             src="https://www.gravatar.com/avatar/e157a71a8b1585e6a33e2c6da01d4cac"
